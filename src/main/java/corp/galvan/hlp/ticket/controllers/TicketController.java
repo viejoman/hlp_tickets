@@ -65,6 +65,32 @@ public class TicketController {
         return _TicketModel;
     }
 
+    @RequestMapping(value = "/newList",method = RequestMethod.POST)
+    public TicketModel addListTicket(@RequestBody List<Ticket> p__listTicket)
+    {
+        TicketModel _TicketModel = new TicketModel();
+
+        List<Ticket> _listTicket = new ArrayList<Ticket>();
+
+        for (Ticket p__ticket : p__listTicket) {
+
+            Boolean _isNew = (p__ticket.getIdticket() > 0L) ? true : false;
+
+            if (validarTicket(p__ticket)) {
+                p__ticket = _ticketService.saveOrUpdate(p__ticket);
+                _log.debug("Added:: " + p__ticket);
+                _listTicket.add(p__ticket);
+            }
+
+        }
+
+        _TicketModel.setSuccess(true);
+        _TicketModel.setMessage("Ticket Added");
+        _TicketModel.setCode("200");
+        _TicketModel.setData(_listTicket);
+        return _TicketModel;
+    }
+
     private Boolean validarTicket(Ticket p__ticket)
     {
         Boolean _valido = true;
