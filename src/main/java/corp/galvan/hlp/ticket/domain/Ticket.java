@@ -131,6 +131,9 @@ public class Ticket implements Serializable {
     @Column(name="idusuariosis")
     private Long idusuariosis;
 
+    @Transient
+    private Usuario usuariosisdata;
+
     @NotNull
     @Column(name="fecharegistro")
     @Convert(converter = LocalDateTimeConverter.class)

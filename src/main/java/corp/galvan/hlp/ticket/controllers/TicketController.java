@@ -9,6 +9,7 @@ import corp.galvan.hlp.ticket.model.TicketModel;
 import corp.galvan.hlp.ticket.service.AdjuntoDoctoTicketService;
 import corp.galvan.hlp.ticket.service.HistorialTicketService;
 import corp.galvan.hlp.ticket.service.TicketService;
+import corp.galvan.hlp.ticket.service.UsuarioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class TicketController {
 
     @Autowired
     private AdjuntoDoctoTicketService _adjuntoDoctoTicketService;
+
+    @Autowired
+    private UsuarioService _usuarioService;
 
     Logger _log = LoggerFactory.getLogger(this.getClass());
 
@@ -239,6 +243,7 @@ public class TicketController {
             //getHistorialTicketByIdticket
             _ticketAux.setHistorialtickets(_historialTicketService.getHistorialTicketByIdticket(_ticketAux.getIdticket()));
             _ticketAux.setAdjuntodoctotickets(_adjuntoDoctoTicketService.findByIdticket(_ticketAux.getIdticket()));
+            _ticketAux.setUsuariosisdata(_usuarioService.getById(_ticketAux.getIdusuariosis()));
         }
 
         _TicketModel.setSuccess(true);

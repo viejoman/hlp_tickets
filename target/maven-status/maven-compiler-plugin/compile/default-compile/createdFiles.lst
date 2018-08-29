@@ -33,3 +33,5 @@ corp/galvan/hlp/ticket/service/HistorialTicketService.class
 corp/galvan/hlp/ticket/util/ValidationUtil.class
 corp/galvan/hlp/ticket/domain/Ticket.class
 corp/galvan/hlp/ticket/repositories/HistorialTicketRepository.class
+corp/galvan/hlp/ticket/service/UsuarioService.class
+corp/galvan/hlp/ticket/service/UsuarioServiceImpl.class

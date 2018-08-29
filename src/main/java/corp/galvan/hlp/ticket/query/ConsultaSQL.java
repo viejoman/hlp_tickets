@@ -28,7 +28,7 @@ public interface ConsultaSQL {
             "join desarrollo.usuarios usr on usr.id = htk.idusuario " +
             "left join desarrollo.hlp_acciones ac on ac.idaccion = htk.idaccion " +
             "left join desarrollo.hlp_inhibidores inh on inh.idinhibidor = htk.idinhibidor " +
-            "order by htk.idhistorialticket, htk.fecharegistro DESC";
+            "ORDER BY htk.idhistorialticket, htk.fecharegistro DESC";
 
     String _LISTAR_HISTORIAL_TICKETS_BY_IDTICKET = "SELECT " +
             "htk.idhistorialticket, " +
@@ -56,7 +56,7 @@ public interface ConsultaSQL {
             "left join desarrollo.hlp_inhibidores inh on inh.idinhibidor = htk.idinhibidor " +
             "WHERE " +
             "htk.idticket = :p_idticket " +
-            "order by htk.idhistorialticket, htk.fecharegistro DESC";
+            "ORDER BY htk.idhistorialticket, htk.fecharegistro DESC";
 
     String _BUSCAR_TICKETS_BY_IDUSUARIOSIS = "SELECT " +
             "tk.idticket, " +
@@ -91,7 +91,8 @@ public interface ConsultaSQL {
             "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN (SELECT usr.oficina_id FROM desarrollo.usuarios usr WHERE usr.id = :p_idusuario ) suc " +
             "ON tk.idsucursal = suc.oficina_id " +
-            "WHERE tk.idestado = :p_idestatus";
+            "WHERE tk.idestado = :p_idestatus " +
+            "ORDER BY tk.fecharegistro DESC ";
 
     String _BUSCAR_TICKETS_BY_IDUSUARIO = "SELECT " +
             "tk.idticket, " +
@@ -124,7 +125,8 @@ public interface ConsultaSQL {
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
             "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
-            "WHERE tk.idusuario = :p_idusuario AND tk.idestado = :p_idestatus";
+            "WHERE tk.idusuario = :p_idusuario AND tk.idestado = :p_idestatus " +
+            "ORDER BY tk.fecharegistro DESC ";
 
     String _BUSCAR_TICKETS_CANCELADOS_Y_CERRADOS_BY_IDUSUARIOSIS = "SELECT " +
             "tk.idticket, " +
@@ -159,7 +161,8 @@ public interface ConsultaSQL {
             "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN (SELECT usr.oficina_id FROM desarrollo.usuarios usr WHERE usr.id = :p_idusuario ) suc " +
             "ON tk.idsucursal = suc.oficina_id " +
-            "WHERE tk.idestado in (3, 4)";
+            "WHERE tk.idestado in (3, 4) " +
+            "ORDER BY tk.fecharegistro DESC ";
 
 
     String _BUSCAR_TICKETS_CANCELADOS_Y_CERRADOS_BY_IDUSUARIO = "SELECT " +
@@ -193,6 +196,7 @@ public interface ConsultaSQL {
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
             "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
-            "WHERE tk.idusuario = :p_idusuario AND tk.idestado in (3, 4)";
+            "WHERE tk.idusuario = :p_idusuario AND tk.idestado in (3, 4) " +
+            "ORDER BY tk.fecharegistro DESC ";
 
 }

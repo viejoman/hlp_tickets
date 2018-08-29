@@ -3,6 +3,7 @@
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/domain/Ticket.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/config/JwtFilter.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/model/TipoServicio.java
+/home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/service/UsuarioServiceImpl.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/enums/Grupos.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/model/HistorialTicketModel.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/query/ConsultaSQL.java
@@ -22,6 +23,7 @@
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/controllers/TicketController.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/exception/ResourceNotFoundException.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/model/AdjuntoDoctoTicketModel.java
+/home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/service/UsuarioService.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/model/Accion.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/controllers/AdjuntoDoctoTicketController.java
 /home/vagrant/Workspace/deployment/microservices/ticket/src/main/java/corp/galvan/hlp/ticket/service/TicketService.java
