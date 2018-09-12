@@ -79,6 +79,7 @@ public interface ConsultaSQL {
             "tk.referencia, " +
             "tk.titulo, " +
             "tps.idtiposervicio id_tiposervicio, tps.nombre nombre_tiposervicio, " +
+            "ofctk.id id_oficina, ofctk.clave clave_oficina, ofctk.nombre nombre_oficina, " +
             "usrtk.id id_usrtk, usrtk.usuario usuario_usrtk, " +
             "usrtk.nombre nombre_usrtk, usrtk.apellido_paterno apaterno_usrtk, " +
             "usrtk.apellido_materno amaterno_usrtk, " +
@@ -89,10 +90,10 @@ public interface ConsultaSQL {
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
             "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
             "INNER JOIN (SELECT usr.oficina_id FROM desarrollo.usuarios usr WHERE usr.id = :p_idusuario ) suc " +
             "ON tk.idsucursal = suc.oficina_id " +
-            "WHERE tk.idestado = :p_idestatus " +
-            "ORDER BY tk.fecharegistro DESC ";
+            "WHERE tk.idestado = :p_idestatus ";
 
     String _BUSCAR_TICKETS_BY_IDUSUARIO = "SELECT " +
             "tk.idticket, " +
@@ -115,6 +116,7 @@ public interface ConsultaSQL {
             "tk.referencia, " +
             "tk.titulo, " +
             "tps.idtiposervicio id_tiposervicio, tps.nombre nombre_tiposervicio, " +
+            "ofctk.id id_oficina, ofctk.clave clave_oficina, ofctk.nombre nombre_oficina, " +
             "usrtk.id id_usrtk, usrtk.usuario usuario_usrtk, " +
             "usrtk.nombre nombre_usrtk, usrtk.apellido_paterno apaterno_usrtk, " +
             "usrtk.apellido_materno amaterno_usrtk, " +
@@ -125,8 +127,43 @@ public interface ConsultaSQL {
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
             "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
-            "WHERE tk.idusuario = :p_idusuario AND tk.idestado = :p_idestatus " +
-            "ORDER BY tk.fecharegistro DESC ";
+            "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
+            "WHERE tk.idusuario = :p_idusuario AND tk.idestado = :p_idestatus ";
+
+    String _BUSCAR_TICKETS = "SELECT " +
+            "tk.idticket, " +
+            "tk.descripcion, " +
+            "tk.fechaapertura, " +
+            "tk.fechaasignado, " +
+            "tk.fechacierre, " +
+            "tk.fechaevaluacion, " +
+            "tk.fecharegistro, " +
+            "tk.fechaatencion, " +
+            "tk.idcategoriaserv, " +
+            "tk.idestado, " +
+            "tk.idprioridad, " +
+            "tk.idsubcategoriaserv, " +
+            "tk.idsucursal, " +
+            "tk.idtiposervicio id_tiposervicioticket, " +
+            "tk.idusuario, " +
+            "tk.idusuariosis, " +
+            "tk.indicevaloracion, " +
+            "tk.referencia, " +
+            "tk.titulo, " +
+            "tps.idtiposervicio id_tiposervicio, tps.nombre nombre_tiposervicio, " +
+            "ofctk.id id_oficina, ofctk.clave clave_oficina, ofctk.nombre nombre_oficina, " +
+            "usrtk.id id_usrtk, usrtk.usuario usuario_usrtk, " +
+            "usrtk.nombre nombre_usrtk, usrtk.apellido_paterno apaterno_usrtk, " +
+            "usrtk.apellido_materno amaterno_usrtk, " +
+            "usrtk.email email_usrtk, " +
+            "usrtk.oficina_id idsucursal_usrtk,  " +
+            "usrtk.grupo_id idgrupo_usrtk  " +
+            "FROM " +
+            "desarrollo.hlp_tickets tk " +
+            "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
+            "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
+            "WHERE tk.idestado = :p_idestatus ";
 
     String _BUSCAR_TICKETS_CANCELADOS_Y_CERRADOS_BY_IDUSUARIOSIS = "SELECT " +
             "tk.idticket, " +
@@ -149,6 +186,7 @@ public interface ConsultaSQL {
             "tk.referencia, " +
             "tk.titulo, " +
             "tps.idtiposervicio id_tiposervicio, tps.nombre nombre_tiposervicio, " +
+            "ofctk.id id_oficina, ofctk.clave clave_oficina, ofctk.nombre nombre_oficina, " +
             "usrtk.id id_usrtk, usrtk.usuario usuario_usrtk, " +
             "usrtk.nombre nombre_usrtk, usrtk.apellido_paterno apaterno_usrtk, " +
             "usrtk.apellido_materno amaterno_usrtk, " +
@@ -159,11 +197,10 @@ public interface ConsultaSQL {
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
             "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
             "INNER JOIN (SELECT usr.oficina_id FROM desarrollo.usuarios usr WHERE usr.id = :p_idusuario ) suc " +
             "ON tk.idsucursal = suc.oficina_id " +
-            "WHERE tk.idestado in (3, 4) " +
-            "ORDER BY tk.fecharegistro DESC ";
-
+            "WHERE tk.idestado in (3, 4) ";
 
     String _BUSCAR_TICKETS_CANCELADOS_Y_CERRADOS_BY_IDUSUARIO = "SELECT " +
             "tk.idticket, " +
@@ -186,6 +223,7 @@ public interface ConsultaSQL {
             "tk.referencia, " +
             "tk.titulo, " +
             "tps.idtiposervicio id_tiposervicio, tps.nombre nombre_tiposervicio, " +
+            "ofctk.id id_oficina, ofctk.clave clave_oficina, ofctk.nombre nombre_oficina, " +
             "usrtk.id id_usrtk, usrtk.usuario usuario_usrtk, " +
             "usrtk.nombre nombre_usrtk, usrtk.apellido_paterno apaterno_usrtk, " +
             "usrtk.apellido_materno amaterno_usrtk, " +
@@ -196,7 +234,42 @@ public interface ConsultaSQL {
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
             "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
-            "WHERE tk.idusuario = :p_idusuario AND tk.idestado in (3, 4) " +
-            "ORDER BY tk.fecharegistro DESC ";
+            "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
+            "WHERE tk.idusuario = :p_idusuario AND tk.idestado in (3, 4) ";
+
+    String _BUSCAR_TICKETS_CANCELADOS_Y_CERRADOS = "SELECT " +
+            "tk.idticket, " +
+            "tk.descripcion, " +
+            "tk.fechaapertura, " +
+            "tk.fechaasignado, " +
+            "tk.fechacierre, " +
+            "tk.fechaevaluacion, " +
+            "tk.fecharegistro, " +
+            "tk.fechaatencion, " +
+            "tk.idcategoriaserv, " +
+            "tk.idestado, " +
+            "tk.idprioridad, " +
+            "tk.idsubcategoriaserv, " +
+            "tk.idsucursal, " +
+            "tk.idtiposervicio id_tiposervicioticket, " +
+            "tk.idusuario, " +
+            "tk.idusuariosis, " +
+            "tk.indicevaloracion, " +
+            "tk.referencia, " +
+            "tk.titulo, " +
+            "tps.idtiposervicio id_tiposervicio, tps.nombre nombre_tiposervicio, " +
+            "ofctk.id id_oficina, ofctk.clave clave_oficina, ofctk.nombre nombre_oficina, " +
+            "usrtk.id id_usrtk, usrtk.usuario usuario_usrtk, " +
+            "usrtk.nombre nombre_usrtk, usrtk.apellido_paterno apaterno_usrtk, " +
+            "usrtk.apellido_materno amaterno_usrtk, " +
+            "usrtk.email email_usrtk, " +
+            "usrtk.oficina_id idsucursal_usrtk,  " +
+            "usrtk.grupo_id idgrupo_usrtk  " +
+            "FROM " +
+            "desarrollo.hlp_tickets tk " +
+            "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
+            "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
+            "WHERE tk.idestado in (3, 4) ";
 
 }

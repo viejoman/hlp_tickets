@@ -1,6 +1,7 @@
 package corp.galvan.hlp.ticket.domain;
 
 import corp.galvan.hlp.ticket.converters.LocalDateTimeConverter;
+import corp.galvan.hlp.ticket.model.Oficina;
 import corp.galvan.hlp.ticket.model.TipoServicio;
 import corp.galvan.hlp.ticket.model.Usuario;
 import lombok.AllArgsConstructor;
@@ -71,6 +72,14 @@ import java.util.List;
                                         @FieldResult(name = "email", column = "email_usrtk"),
                                         @FieldResult(name = "idsucursal", column = "idsucursal_usrtk"),
                                         @FieldResult(name = "idgrupo", column = "idgrupo_usrtk")
+                                }
+                        ),
+                        @EntityResult(
+                                entityClass = Oficina.class,
+                                fields = {
+                                        @FieldResult(name = "idoficina", column = "id_oficina"),
+                                        @FieldResult(name = "clave", column = "clave_oficina"),
+                                        @FieldResult(name = "nombre", column = "nombre_oficina")
                                 }
                         )
                 }
@@ -163,6 +172,9 @@ public class Ticket implements Serializable {
 
     @Column(name="idsucursal")
     private Long idsucursal;
+
+    @Transient
+    private Oficina sucursaldata;
 
     @Column(name="fechaatencion")
     @Convert(converter = LocalDateTimeConverter.class)

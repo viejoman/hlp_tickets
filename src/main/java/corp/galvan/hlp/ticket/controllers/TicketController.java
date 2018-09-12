@@ -1,11 +1,14 @@
 package corp.galvan.hlp.ticket.controllers;
 
+import com.google.gson.reflect.TypeToken;
 import corp.galvan.hlp.ticket.domain.HistorialTicket;
 import corp.galvan.hlp.ticket.domain.Ticket;
 import corp.galvan.hlp.ticket.enums.Acciones;
 import corp.galvan.hlp.ticket.enums.Estados;
 import corp.galvan.hlp.ticket.exception.ResourceNotFoundException;
+import corp.galvan.hlp.ticket.model.Sort;
 import corp.galvan.hlp.ticket.model.TicketModel;
+import com.google.gson.Gson;
 import corp.galvan.hlp.ticket.service.AdjuntoDoctoTicketService;
 import corp.galvan.hlp.ticket.service.HistorialTicketService;
 import corp.galvan.hlp.ticket.service.TicketService;
@@ -15,8 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -205,33 +210,51 @@ public class TicketController {
 
 
     @RequestMapping(value = "/hlp/{idgrupo}/shownew/{idusuario}", method = RequestMethod.GET)
-    public TicketModel getAllTicketsHLPByUsuario(@PathVariable long idgrupo, @PathVariable long idusuario, @RequestParam("page") long page, @RequestParam("start") long start, @RequestParam("limit") long limit)
+    public TicketModel getAllTicketsHLPByUsuario(@PathVariable long idgrupo, @PathVariable long idusuario, @RequestParam("page") long page, @RequestParam("start") long start, @RequestParam("limit") long limit, @RequestParam(value = "sort", required = false) String sort, @RequestParam(value = "filter", required = false) String filter)
     {
-        return getAllTicketUsuarioByEstatus(idgrupo, idusuario, Estados._NUEVO, page, start, limit);
+        Collection<Sort> _sortList= new ArrayList<>();
+        Type collectionType = new TypeToken<Collection<Sort>>(){}.getType();
+        if  (sort != null) {
+            _sortList = new Gson().fromJson(sort, collectionType);
+        }
+
+        return getAllTicketUsuarioByEstatus(idgrupo, idusuario, Estados._NUEVO, page, start, limit, _sortList);
     }
 
     @RequestMapping(value = "/hlp/{idgrupo}/showprocessed/{idusuario}", method = RequestMethod.GET)
-    public TicketModel getAllTicketsProcessedHLPByUsuario(@PathVariable long idgrupo, @PathVariable long idusuario, @RequestParam("page") long page, @RequestParam("start") long start, @RequestParam("limit") long limit)
+    public TicketModel getAllTicketsProcessedHLPByUsuario(@PathVariable long idgrupo, @PathVariable long idusuario, @RequestParam("page") long page, @RequestParam("start") long start, @RequestParam("limit") long limit, @RequestParam(value = "sort", required = false) String sort, @RequestParam(value = "filter", required = false) String filter)
     {
-        return getAllTicketUsuarioByEstatus(idgrupo, idusuario, Estados._EN_PROCESO, page, start, limit);
+        Collection<Sort> _sortList= new ArrayList<>();
+        Type collectionType = new TypeToken<Collection<Sort>>(){}.getType();
+        if  (sort != null) {
+            _sortList = new Gson().fromJson(sort, collectionType);
+        }
+
+        return getAllTicketUsuarioByEstatus(idgrupo, idusuario, Estados._EN_PROCESO, page, start, limit, _sortList);
     }
 
     @RequestMapping(value = "/hlp/{idgrupo}/showclosed/{idusuario}", method = RequestMethod.GET)
-    public TicketModel getAllTicketsCanceledHLPByUsuario(@PathVariable long idgrupo, @PathVariable long idusuario, @RequestParam("page") long page, @RequestParam("start") long start, @RequestParam("limit") long limit)
+    public TicketModel getAllTicketsCanceledHLPByUsuario(@PathVariable long idgrupo, @PathVariable long idusuario, @RequestParam("page") long page, @RequestParam("start") long start, @RequestParam("limit") long limit, @RequestParam(value = "sort", required = false) String sort, @RequestParam(value = "filter", required = false) String filter)
     {
-        return getAllTicketUsuarioByEstatus(idgrupo, idusuario, Estados._CERRADO, page, start, limit);
+        Collection<Sort> _sortList= new ArrayList<>();
+        Type collectionType = new TypeToken<Collection<Sort>>(){}.getType();
+        if  (sort != null) {
+            _sortList = new Gson().fromJson(sort, collectionType);
+        }
+
+        return getAllTicketUsuarioByEstatus(idgrupo, idusuario, Estados._CERRADO, page, start, limit, _sortList);
     }
 
-    private TicketModel getAllTicketUsuarioByEstatus(Long p__idgrupo, Long p__idusuario, Long p__idestatus, Long page, Long start, Long limit)
+    private TicketModel getAllTicketUsuarioByEstatus(Long p__idgrupo, Long p__idusuario, Long p__idestatus, Long page, Long start, Long limit, Collection<Sort> sortList)
     {
 
         TicketModel _TicketModel = new TicketModel();
         List<Ticket> _listTicket = new ArrayList<Ticket>();
 
         if (p__idestatus == Estados._CERRADO) {
-            _listTicket = _ticketService.getListTicketCanceladosCerradosByIdUsuario(p__idgrupo, p__idusuario);
+            _listTicket = _ticketService.getListTicketCanceladosCerradosByIdUsuario(p__idgrupo, p__idusuario, sortList);
         } else {
-            _listTicket = _ticketService.getListTicketUsuarioByIdEstado(p__idgrupo, p__idusuario, p__idestatus);
+            _listTicket = _ticketService.getListTicketUsuarioByIdEstado(p__idgrupo, p__idusuario, p__idestatus, sortList);
         }
 
         _TicketModel.setTotal(_listTicket.size());
