@@ -25,7 +25,7 @@ public interface ConsultaSQL {
             "inh.nombre nombre_inh, " +
             "inh.idtipoinhibidor idtipoinhibidor_inh " +
             "FROM desarrollo.hlp_historialtickets htk " +
-            "join desarrollo.usuarios usr on usr.id = htk.idusuario " +
+            "left join desarrollo.usuarios usr on usr.id = htk.idusuario " +
             "left join desarrollo.hlp_acciones ac on ac.idaccion = htk.idaccion " +
             "left join desarrollo.hlp_inhibidores inh on inh.idinhibidor = htk.idinhibidor " +
             "ORDER BY htk.idhistorialticket, htk.fecharegistro DESC";
@@ -51,7 +51,7 @@ public interface ConsultaSQL {
             "inh.nombre nombre_inh, " +
             "inh.idtipoinhibidor idtipoinhibidor_inh " +
             "FROM desarrollo.hlp_historialtickets htk " +
-            "join desarrollo.usuarios usr on usr.id = htk.idusuario " +
+            "left join desarrollo.usuarios usr on usr.id = htk.idusuario " +
             "left join desarrollo.hlp_acciones ac on ac.idaccion = htk.idaccion " +
             "left join desarrollo.hlp_inhibidores inh on inh.idinhibidor = htk.idinhibidor " +
             "WHERE " +
@@ -89,7 +89,7 @@ public interface ConsultaSQL {
             "FROM " +
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
-            "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "LEFT JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
             "INNER JOIN (SELECT usr.oficina_id FROM desarrollo.usuarios usr WHERE usr.id = :p_idusuario ) suc " +
             "ON tk.idsucursal = suc.oficina_id " +
@@ -126,7 +126,7 @@ public interface ConsultaSQL {
             "FROM " +
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
-            "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "LEFT JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
             "WHERE tk.idusuario = :p_idusuario AND tk.idestado = :p_idestatus ";
 
@@ -161,7 +161,7 @@ public interface ConsultaSQL {
             "FROM " +
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
-            "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "LEFT JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
             "WHERE tk.idestado = :p_idestatus ";
 
@@ -196,7 +196,7 @@ public interface ConsultaSQL {
             "FROM " +
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
-            "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "LEFT JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
             "INNER JOIN (SELECT usr.oficina_id FROM desarrollo.usuarios usr WHERE usr.id = :p_idusuario ) suc " +
             "ON tk.idsucursal = suc.oficina_id " +
@@ -233,7 +233,7 @@ public interface ConsultaSQL {
             "FROM " +
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
-            "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "LEFT JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
             "WHERE tk.idusuario = :p_idusuario AND tk.idestado in (3, 4) ";
 
@@ -268,7 +268,7 @@ public interface ConsultaSQL {
             "FROM " +
             "desarrollo.hlp_tickets tk " +
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
-            "JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
+            "LEFT JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
             "WHERE tk.idestado in (3, 4) ";
 
