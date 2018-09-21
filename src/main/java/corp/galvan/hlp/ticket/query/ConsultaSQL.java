@@ -58,7 +58,17 @@ public interface ConsultaSQL {
             "htk.idticket = :p_idticket " +
             "ORDER BY htk.idhistorialticket, htk.fecharegistro DESC";
 
-    String _BUSCAR_TICKETS_BY_IDUSUARIOSIS = "SELECT " +
+    String _BUSCAR_TICKETS_BY_IDUSUARIOSIS = "WITH t_usuario_oficina (usuario_id, oficina_id) AS " +
+            "( " +
+            "SELECT usr.id usuario_id, usr.oficina_id oficina_id " +
+            "FROM desarrollo.usuarios usr " +
+            "WHERE usr.id = :p_idusuario " +
+            "UNION " +
+            "SELECT usrofc.usuario_id usuario_id, usrofc.oficina_id oficina_id " +
+            "FROM desarrollo.usuario_oficina usrofc " +
+            "WHERE usrofc.usuario_id = :p_idusuario and usrofc.activo = true  " +
+            " ) " +
+            "SELECT " +
             "tk.idticket, " +
             "tk.descripcion, " +
             "tk.fechaapertura, " +
@@ -91,7 +101,7 @@ public interface ConsultaSQL {
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
             "LEFT JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
-            "INNER JOIN (SELECT usr.oficina_id FROM desarrollo.usuarios usr WHERE usr.id = :p_idusuario ) suc " +
+            "INNER JOIN (SELECT usr.oficina_id FROM t_usuario_oficina usr WHERE usr.usuario_id = :p_idusuario ) suc " +
             "ON tk.idsucursal = suc.oficina_id " +
             "WHERE tk.idestado = :p_idestatus ";
 
@@ -165,7 +175,17 @@ public interface ConsultaSQL {
             "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
             "WHERE tk.idestado = :p_idestatus ";
 
-    String _BUSCAR_TICKETS_CANCELADOS_Y_CERRADOS_BY_IDUSUARIOSIS = "SELECT " +
+    String _BUSCAR_TICKETS_CANCELADOS_Y_CERRADOS_BY_IDUSUARIOSIS = "WITH t_usuario_oficina (usuario_id, oficina_id) AS " +
+            "( " +
+            "SELECT usr.id usuario_id, usr.oficina_id oficina_id " +
+            "FROM desarrollo.usuarios usr " +
+            "WHERE usr.id = :p_idusuario " +
+            "UNION " +
+            "SELECT usrofc.usuario_id usuario_id, usrofc.oficina_id oficina_id " +
+            "FROM desarrollo.usuario_oficina usrofc " +
+            "WHERE usrofc.usuario_id = :p_idusuario and usrofc.activo = true " +
+            " ) " +
+            "SELECT " +
             "tk.idticket, " +
             "tk.descripcion, " +
             "tk.fechaapertura, " +
@@ -198,7 +218,7 @@ public interface ConsultaSQL {
             "INNER JOIN desarrollo.hlp_tiposervicios tps on tk.idtiposervicio = tps.idtiposervicio " +
             "LEFT JOIN desarrollo.usuarios usrtk on tk.idusuario = usrtk.id " +
             "INNER JOIN desarrollo.oficinas ofctk on tk.idsucursal = ofctk.id " +
-            "INNER JOIN (SELECT usr.oficina_id FROM desarrollo.usuarios usr WHERE usr.id = :p_idusuario ) suc " +
+            "INNER JOIN (SELECT usr.oficina_id FROM t_usuario_oficina usr WHERE usr.usuario_id = :p_idusuario ) suc " +
             "ON tk.idsucursal = suc.oficina_id " +
             "WHERE tk.idestado in (3, 4) ";
 
